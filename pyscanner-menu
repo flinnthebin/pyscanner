@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 class Menu:
     def __init__(self, options_dict):
@@ -44,3 +44,16 @@ class Menu:
                 continue
             print(f"You selected: {choice}")
             break
+
+options_dict = {
+    1: "Option 1",
+    2: "Option 2",
+    3: {
+        1: "Sub-Option 1",
+        2: "Sub-Option 2",
+        3: "Sub-Option 3",
+    },
+}
+
+menu = Menu(options_dict)
+menu.menu_driver()
