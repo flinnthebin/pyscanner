@@ -1,7 +1,17 @@
 #!/usr/bin/python3
 
 import os
+import json
 from getkey import getkey
+
+with open("options.json", "r") as f:
+    data = json.load(f)
+
+options_dict = data["options_dict"]
+pingsweep_options = data["pingsweep_options"]
+portscan_options = data["portscan_options"]
+snmpscan_options = data["snmpscan_options"]
+sub_options_dict = data["sub_options_dict"]
 
 class Menu:
     def __init__(self, options_dict):
@@ -52,36 +62,6 @@ class Menu:
                 continue
             print(f"You selected: {choice}")
             break
-
-options_dict = {
-    1: "pingsweep",
-    2: "portscan",
-    3: "snmpscan",
-}
-
-pingsweep_options = {
-    1: "ping 1",
-    2: "ping 2",
-    3: "ping 3",
-}
-
-portscan_options = {
-    1: "port 1",
-    2: "port 2",
-    3: "port 3",
-}
-
-snmpscan_options = {
-    1: "snmp 1",
-    2: "snmp 2",
-    3: "snmp 3",
-}
-
-sub_options_dict = {
-    "pingsweep": pingsweep_options,
-    "portscan": portscan_options,
-    "snmpscan": snmpscan_options,
-}
 
 menu = Menu(options_dict)
 menu.menu_driver()

@@ -1,0 +1,27 @@
+{
+    "options_dict": {
+        "1": "pingsweep",
+        "2": "portscan",
+        "3": "snmpscan"
+    },
+    "pingsweep_options": {
+        "1": "ping 1",
+        "2": "ping 2",
+        "3": "ping 3"
+    },
+    "portscan_options": {
+        "1": "port 1",
+        "2": "port 2",
+        "3": "port 3"
+    },
+    "snmpscan_options": {
+        "1": "snmp 1",
+        "2": "snmp 2",
+        "3": "snmp 3"
+    },
+    "sub_options_dict": {
+        "pingsweep": "pingsweep_options",
+        "portscan": "portscan_options",
+        "snmpscan": "snmpscan_options"
+    }
+}
