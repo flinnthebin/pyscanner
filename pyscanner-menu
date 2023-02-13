@@ -1,23 +1,46 @@
 #!/usr/bin/python
 
 class Menu:
-    def __init__(self):
-        self.options = []
-    
-    def add_option(self, option):
-        self.options.append(option)
+    def __init__(self, options_dict):
+        self.options_dict = options_dict
+        self.current_layer = options_dict
+        self.current_index = 0
     
     def display_options(self):
         print("Please choose an option:")
-        for i, option in enumerate(self.options):
-            print(f"{i + 1}. {option}")
+        for i, (key, value) in enumerate(self.current_layer.items()):
+            symbol = "*" if i == self.current_index else " "
+            print(f"[{symbol}] {value}")
     
     def get_choice(self):
         choice = input("Enter your choice: ")
+        if choice in ["\x1b[A", "\x1b[B"]: # up arrow or down arrow
+            if choice == "\x1b[A":
+                self.current_index = (self.current_index - 1 + len(self.current_layer)) % len(self.current_layer)
+            else:
+                self.current_index = (self.current_index + 1) % len(self.current_layer)
+            self.display_options()
+            return None
         try:
             choice = int(choice)
         except ValueError:
             return None
-        if choice < 1 or choice > len(self.options):
+        if choice < 1 or choice > len(self.current_layer):
             return None
-        return choice
+        selected_key = list(self.current_layer.keys())[choice-1]
+        selected_option = self.current_layer[selected_key]
+        if type(selected_option) == dict:
+            self.current_layer = selected_option
+            self.current_index = 0
+            self.display_options()
+        else:
+            return selected_key
+    
+    def menu_driver(self):
+        while True:
+            self.display_options()
+            choice = self.get_choice()
+            if choice is None:
+                continue
+            print(f"You selected: {choice}")
+            break
