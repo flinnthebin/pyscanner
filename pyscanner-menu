@@ -19,8 +19,10 @@ class Menu:
         key = getkey()
         if key == "UP":
             self.current_index = (self.current_index - 1 + len(self.current_layer)) % len(self.current_layer)
+            self.display_options()
         elif key == "DOWN":
             self.current_index = (self.current_index + 1) % len(self.current_layer)
+            self.display_options()
         else:
             try:
                 choice = int(key)
@@ -30,11 +32,12 @@ class Menu:
                 return None
             selected_key = list(self.current_layer.keys())[choice-1]
             selected_option = self.current_layer[selected_key]
-            if type(selected_option) == dict:
-                self.current_layer = selected_option
+            if selected_option in sub_options_dict:
+                self.current_layer = sub_options_dict[selected_option]
                 self.current_index = 0
             else:
                 return selected_key
+    
     
     def menu_driver(self):
         while True:
@@ -47,13 +50,33 @@ class Menu:
             break
 
 options_dict = {
-    1: "Option 1",
-    2: "Option 2",
-    3: {
-        1: "Sub-Option 1",
-        2: "Sub-Option 2",
-        3: "Sub-Option 3",
-    },
+    1: "pingsweep",
+    2: "portscan",
+    3: "snmpscan",
+}
+
+pingsweep_options = {
+    1: "ping 1",
+    2: "ping 2",
+    3: "ping 3",
+}
+
+portscan_options = {
+    1: "port 1",
+    2: "port 2",
+    3: "port 3",
+}
+
+snmpscan_options = {
+    1: "snmp 1",
+    2: "snmp 2",
+    3: "snmp 3",
+}
+
+sub_options_dict = {
+    1: pingsweep_options,
+    2: portscan_options,
+    3: snmpscan_options,
 }
 
 menu = Menu(options_dict)
