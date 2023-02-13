@@ -7,14 +7,14 @@ class Menu:
     def __init__(self, options_dict):
         self.options_dict = options_dict
         self.current_layer = options_dict
-        self.current_index = 2
+        self.current_index = 0
     
     def display_options(self):
         print("Please choose an option:")
         for i, (key, value) in enumerate(self.current_layer.items()):
             symbol = "*" if i == self.current_index else " "
             print(f"[{symbol}] {value}")
-    
+       
     def get_choice(self):
         key = getkey()
         if key == "UP":
@@ -23,14 +23,8 @@ class Menu:
         elif key == "DOWN":
             self.current_index = (self.current_index + 1) % len(self.current_layer)
             self.display_options()
-        else:
-            try:
-                choice = int(key)
-            except ValueError:
-                return None
-            if choice < 1 or choice > len(self.current_layer):
-                return None
-            selected_key = list(self.current_layer.keys())[choice-1]
+        elif key == "ENTER":
+            selected_key = list(self.current_layer.keys())[self.current_index]
             selected_option = self.current_layer[selected_key]
             if selected_option in sub_options_dict:
                 self.current_layer = sub_options_dict[selected_option]
@@ -38,8 +32,9 @@ class Menu:
             else:
                 return selected_key
     
-    
-    def menu_driver(self):
+    def menu_driver(self, current_pointer=None):
+        if current_pointer:
+            self.current_layer = current_pointer
         while True:
             self.display_options()
             choice = self.get_choice()
@@ -74,9 +69,9 @@ snmpscan_options = {
 }
 
 sub_options_dict = {
-    1: pingsweep_options,
-    2: portscan_options,
-    3: snmpscan_options,
+    "pingsweep": pingsweep_options,
+    "portscan": portscan_options,
+    "snmpscan": snmpscan_options,
 }
 
 menu = Menu(options_dict)
