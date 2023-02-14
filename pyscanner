@@ -55,8 +55,12 @@ class PingSweep:
         end_ip = responses["end_ip"]
         timeout = responses["timeout"]
         results = {}
-        for i in range(start_ip, end_ip + 1):
-            target_ip = f"192.168.0.{i}"
+        start_ip_octets = start_ip.split(".")
+        start_ip_base = ".".join(start_ip_octets[:3]) # first 3 octets of start IP
+        start_ip_fourth = int(start_ip_octets[3]) # 4th octet of start IP
+
+        for i in range(start_ip_fourth, int(end_ip.split(".")[3]) + 1):
+            target_ip = f"{start_ip_base}.{i}"
             response = ping(start_ip, end_ip, timeout=timeout, verbose=verbose)
             results[target_ip] = response.success()
         return results
