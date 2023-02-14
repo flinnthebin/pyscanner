@@ -3,24 +3,64 @@
 import argparse
 from pythonping import ping
 
+class InputHelper:
+    @staticmethod
+    def get_input(questions):
+        responses = {}
+        for question in questions:
+            prompt = question["prompt"]
+            variable = question["variable"]
+            default = question.get("default", None)
+            response = input(prompt)
+        if not response and default is not None:
+            response = default
+        if variable == "timeout":
+            response = int(response)
+            responses[variable] = response
+            return responses
+
 class PingSweep:
     def ping(self):
-        target_ip = input("Target IP: ")
-        print(f"Performing a ping sweep on {target_ip}")
-        # Code to perform a ping sweep
+        questions = [
+        {
+        "prompt": "Target IP: ",
+        "variable": "target_ip"
+        }
+        ]
+        responses = InputHelper.get_input(questions)
+        target_ip = responses["target_ip"]
+        print(f"Performing a ping on {target_ip}")
+        # Code to perform a ping
         response = ping(target_ip, verbose=True)
         return response
         
-    def ping_sweep(self,verbose=False):
-        results= {}
-        start_ip = input("Starting IP: ")
-        end_ip = input("End IP: ")
-        timeout = input("Timeout: (default=1) ")
+    def ping_sweep(self, verbose=False):
+        questions = [
+            {
+                "prompt": "Starting IP: ",
+                "variable": "start_ip"
+            },
+            {
+                "prompt": "End IP: ",
+                "variable": "end_ip"
+            },
+            {
+                "prompt": "Timeout: (default=1) ",
+                "variable": "timeout",
+                "default": 1
+            }
+        ]
+        responses = InputHelper.get_input(questions)
+        start_ip = responses["start_ip"]
+        end_ip = responses["end_ip"]
+        timeout = responses["timeout"]
+        results = {}
         for i in range(start_ip, end_ip + 1):
             target_ip = f"192.168.0.{i}"
-            response = ping(start_ip, end_ip, timeout=int(timeout), verbose=verbose)
+            response = ping(start_ip, end_ip, timeout=timeout, verbose=verbose)
             results[target_ip] = response.success()
         return results
+
 
 class PortScan:
     # TODO: implement network scanning using scapy, socket or pyshark libs
