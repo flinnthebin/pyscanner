@@ -1,0 +1,23 @@
+{
+    "ping": [
+      {
+        "prompt": "Target IP: ",
+        "variable": "target_ip"
+      }
+    ],
+    "ping_sweep": [
+      {
+        "prompt": "Starting IP: ",
+        "variable": "start_ip"
+      },
+      {
+        "prompt": "End IP: ",
+        "variable": "end_ip"
+      },
+      {
+        "prompt": "Timeout: (default=1) ",
+        "variable": "timeout",
+        "default": 1
+      }
+    ]}
+  
