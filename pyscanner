@@ -4,18 +4,21 @@ import argparse
 from pythonping import ping
 
 class PingSweep:
-    def ping(self, target):
-        print("Performing a ping sweep on target:", target)
+    def ping(self):
+        target_ip = input("Target IP: ")
+        print(f"Performing a ping sweep on {target_ip}")
         # Code to perform a ping sweep
-        response = ping(target, verbose=True)
+        response = ping(target_ip, verbose=True)
         return response
         
-    def ping_sweep(self, target, timeout=1, verbose=False):
+    def ping_sweep(self,verbose=False):
         results= {}
-        end_ip = input('enter an end ip address for the target range')
-        for i in range(target, end_ip + 1):
+        start_ip = input("Starting IP: ")
+        end_ip = input("End IP: ")
+        timeout = input("Timeout: (default=1) ")
+        for i in range(start_ip, end_ip + 1):
             target_ip = f"192.168.0.{i}"
-            response = ping(target_ip, timeout=timeout, verbose=verbose)
+            response = ping(start_ip, end_ip, timeout=int(timeout), verbose=verbose)
             results[target_ip] = response.success()
         return results
 
@@ -36,12 +39,11 @@ if __name__ == "__main__":
     parser.add_argument("-sw", "--pingsweep", help="Perform a ping sweep", action="store_true")
     parser.add_argument("-ps", "--portscan", help="Perform a port scan", action="store_true")
     parser.add_argument("-sn", "--snmpscan", help="Perform an SNMP scan", action="store_true")
-    parser.add_argument("target", help="Target IP or hostname")
     args = parser.parse_args()
 
     if args.pingsweep:
         scan = PingSweep()
-        scan.ping(args.target)
+        scan.ping()
     elif args.portscan:
         scan = PortScan()
         scan.scan(args.target)
