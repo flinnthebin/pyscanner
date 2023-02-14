@@ -3,11 +3,6 @@
       {
         "prompt": "Target IP: ",
         "variable": "target_ip"
-      },
-      {
-        "prompt": "verbose y/n: (default=no)",
-        "variable": "verbose",
-        "default": "False"
       }
     ],
     "ping_sweep": [
@@ -23,11 +18,8 @@
         "prompt": "Timeout: (default=1) ",
         "variable": "timeout",
         "default": 1
-      },
-      {
-        "prompt": "verbose y/n: (default=no)",
-        "variable": "verbose",
-        "default": "False"
       }
-    ]}
+    
+    ]
+  }
   

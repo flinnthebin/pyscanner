@@ -31,7 +31,7 @@ class PingSweep:
         responses = InputHelper.get_input(questions)
         print(f"Performing a ping on {responses['target_ip']}")
         # Code to perform a ping
-        response = ping(responses["target_ip"], responses["verbose"])
+        response = ping(responses["target_ip"], verbose=True)
         return response
 
     def ping_sweep(self):
@@ -39,7 +39,6 @@ class PingSweep:
         responses = InputHelper.get_input(questions)
         start_ip = responses["start_ip"]
         end_ip = responses["end_ip"]
-        timeout = responses["timeout"]
         results = {}
         start_ip_octets = start_ip.split(".")
         start_ip_base = ".".join(start_ip_octets[:3]) # first 3 octets of start IP
@@ -47,7 +46,7 @@ class PingSweep:
 
         for i in range(start_ip_fourth, int(end_ip.split(".")[3]) + 1):
             target_ip = f"{start_ip_base}.{i}"
-            response = ping(responses["start_ip"], responses["end_ip"], responses["timeout"], responses["verbose"])
+            response = ping(responses["start_ip"], responses["end_ip"], responses["timeout"], verbose=True)
             results[target_ip] = response.success()
         return results
 
