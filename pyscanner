@@ -1,9 +1,15 @@
 #!/usr/bin/python3
 
+import json
 import argparse
 from pythonping import ping
 
 class InputHelper:
+    @staticmethod
+    def load_questions_from_file(file_name):
+        with open(file_name, "r") as f:
+            return json.load(f)
+
     @staticmethod
     def get_input(questions):
         responses = {}
@@ -21,35 +27,15 @@ class InputHelper:
 
 class PingSweep:
     def ping(self):
-        questions = [
-        {
-        "prompt": "Target IP: ",
-        "variable": "target_ip"
-        }
-        ]
+        questions = InputHelper.load_questions_from_file("questions.json")["ping"]
         responses = InputHelper.get_input(questions)
-        target_ip = responses["target_ip"]
-        print(f"Performing a ping on {target_ip}")
+        print(f"Performing a ping on {responses['target_ip']}")
         # Code to perform a ping
-        response = ping(target_ip, verbose=True)
+        response = ping(responses["target_ip"], responses["verbose"])
         return response
-        
-    def ping_sweep(self, verbose=False):
-        questions = [
-            {
-                "prompt": "Starting IP: ",
-                "variable": "start_ip"
-            },
-            {
-                "prompt": "End IP: ",
-                "variable": "end_ip"
-            },
-            {
-                "prompt": "Timeout: (default=1) ",
-                "variable": "timeout",
-                "default": 1
-            }
-        ]
+
+    def ping_sweep(self):
+        questions = InputHelper.load_questions_from_file("questions.json")["ping_sweep"]
         responses = InputHelper.get_input(questions)
         start_ip = responses["start_ip"]
         end_ip = responses["end_ip"]
@@ -61,10 +47,9 @@ class PingSweep:
 
         for i in range(start_ip_fourth, int(end_ip.split(".")[3]) + 1):
             target_ip = f"{start_ip_base}.{i}"
-            response = ping(start_ip, end_ip, timeout=timeout, verbose=verbose)
+            response = ping(responses["start_ip"], responses["end_ip"], responses["timeout"], responses["verbose"])
             results[target_ip] = response.success()
         return results
-
 
 class PortScan:
     # TODO: implement network scanning using scapy, socket or pyshark libs
