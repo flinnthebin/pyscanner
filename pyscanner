@@ -18,12 +18,12 @@ class InputHelper:
             variable = question["variable"]
             default = question.get("default", None)
             response = input(prompt)
-        if not response and default is not None:
-            response = default
-        if variable == "timeout":
-            response = int(response)
+            if variable == "verbose":
+                response = response.lower() == "y"
+            elif not response and default is not None:
+                response = default
             responses[variable] = response
-            return responses
+        return responses
 
 class PingSweep:
     def ping(self):
