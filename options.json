@@ -1,10 +1,14 @@
+
+
 {
     "options_dict": {
+				"_comment1": "this is my comment",
         "1": "pingsweep",
         "2": "portscan",
         "3": "snmpscan"
     },
     "pingsweep_options": {
+				"_comment2": "next comment",
         "1": "ping 1",
         "2": "ping 2",
         "3": "ping 3"
