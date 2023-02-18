@@ -11,3 +11,5 @@ pyscanner-menu more in line with tools like metasploit using traditional navigat
 TODO: integrate pyscanner-menu functionality, make whole experience arrow-navigation noob-friendly
 
 pysnmp seems to be a depth of communication protocol understanding i am working towards. appreciate all suggestions.
+
+no work, no motivation. need to fix.
