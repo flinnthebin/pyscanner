@@ -7,3 +7,5 @@ a python network scanning tool
 pyscanner initial/current design based on cli tools with flags (-sw, ps, sn)
 
 pyscanner-menu more in line with tools like metasploit using traditional navigation
+
+TODO: stream development!!!
